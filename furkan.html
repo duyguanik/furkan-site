@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Furkan için 🎄</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f7f7f7; text-align:center; padding:40px;}
+.card { background:white; padding:20px; margin:20px auto; max-width:500px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+button { padding:10px 20px; border:none; border-radius:8px; background:#4CAF50; color:white; cursor:pointer;}
+button:hover { background:#43a047;}
+</style>
+</head>
+<body>
+
+<h1>Furkan için küçük bir site 😄</h1>
+
+<div class="card">
+<h2>🎮 Mini Quiz</h2>
+<p>En sevdiğim kahve hangisi?</p>
+<button onclick="alert('Bilemedin 😅')">Latte</button>
+<button onclick="alert('Doğru! ☕😄')">Americano</button>
+</div>
+
+<div class="card">
+<h2>🎁 Sürpriz Buton</h2>
+<button onclick="surprise()">Tıkla bakalım</button>
+<p id="surpriseText"></p>
+</div>
+
+<div class="card">
+<h2>🔮 2025 Tahminleri</h2>
+<button onclick="fortune()">Bir kart çek</button>
+<p id="fortuneText"></p>
+</div>
+
+<script>
+const surprises = [
+"Birlikte çok güleceğiz 😄",
+"Bol kahveli günler geliyor ☕",
+"Yeni anılar yolda ✨"
+];
+
+const fortunes = [
+"Mini bir tatil",
+"Çok film gecesi",
+"Çok kahkaha"
+];
+
+function surprise() {
+const r = Math.floor(Math.random() * surprises.length);
+document.getElementById("surpriseText").innerText = surprises[r];
+}
+
+function fortune() {
+const r = Math.floor(Math.random() * fortunes.length);
+document.getElementById("fortuneText").innerText = fortunes[r];
+}
+</script>
+
+</body>
+</html>
