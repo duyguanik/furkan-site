@@ -2,59 +2,133 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Furkan için 🎄</title>
+<title>Biz 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
 <style>
-body { font-family: Arial, sans-serif; background:#f7f7f7; text-align:center; padding:40px;}
-.card { background:white; padding:20px; margin:20px auto; max-width:500px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
-button { padding:10px 20px; border:none; border-radius:8px; background:#4CAF50; color:white; cursor:pointer;}
-button:hover { background:#43a047;}
+body {
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#ffe6f0;
+  text-align:center;
+  padding:30px 10px;
+}
+
+h1 { font-weight:500; }
+
+.card {
+  background:white;
+  max-width:500px;
+  margin:20px auto;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.1);
+  opacity:0;
+  transform:translateY(20px);
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity:1; transform:translateY(0); }
+}
+
+button {
+  padding:10px 18px;
+  border:none;
+  border-radius:10px;
+  background:#ff6fa5;
+  color:white;
+  font-size:14px;
+  cursor:pointer;
+}
+button:hover { background:#ff4f93; }
+
+.gallery img {
+  width:100%;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+#confetti {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+}
 </style>
 </head>
 <body>
 
-<h1>Furkan için küçük bir site 😄</h1>
+<h1 id="greeting"></h1>
 
 <div class="card">
-<h2>🎮 Mini Quiz</h2>
-<p>En sevdiğim kahve hangisi?</p>
-<button onclick="alert('Bilemedin 😅')">Latte</button>
-<button onclick="alert('Doğru! ☕😄')">Americano</button>
+  <h2>💞 Kaç gündür birlikteyiz?</h2>
+  <p id="counter"></p>
 </div>
 
 <div class="card">
-<h2>🎁 Sürpriz Buton</h2>
-<button onclick="surprise()">Tıkla bakalım</button>
-<p id="surpriseText"></p>
+  <h2>🎉 Konfeti zamanı</h2>
+  <button onclick="launchConfetti()">Kutlayalım</button>
 </div>
 
-<div class="card">
-<h2>🔮 2025 Tahminleri</h2>
-<button onclick="fortune()">Bir kart çek</button>
-<p id="fortuneText"></p>
+<div class="card gallery">
+  <h2>📸 Bizden kareler</h2>
+  <img src="https://placekitten.com/500/300">
+  <img src="https://placekitten.com/500/301">
 </div>
+
+<canvas id="confetti"></canvas>
 
 <script>
-const surprises = [
-"Birlikte çok güleceğiz 😄",
-"Bol kahveli günler geliyor ☕",
-"Yeni anılar yolda ✨"
-];
+const startDate = new Date("2025-10-20");
 
-const fortunes = [
-"Mini bir tatil",
-"Çok film gecesi",
-"Çok kahkaha"
-];
-
-function surprise() {
-const r = Math.floor(Math.random() * surprises.length);
-document.getElementById("surpriseText").innerText = surprises[r];
+function updateCounter() {
+  const now = new Date();
+  const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+  document.getElementById("counter").innerText =
+    diff + " gündür hayatımdasın 💖 teşekkür ederim.";
 }
 
-function fortune() {
-const r = Math.floor(Math.random() * fortunes.length);
-document.getElementById("fortuneText").innerText = fortunes[r];
+function updateGreeting() {
+  const h = new Date().getHours();
+  let text = "Merhaba 😄";
+  if (h < 12) text = "Günaydın ☀️";
+  else if (h < 18) text = "İyi günler 😄";
+  else text = "İyi akşamlar 🌙";
+  document.getElementById("greeting").innerText = text + " Furkan";
 }
+
+function launchConfetti() {
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  let pieces = Array.from({length:150}, () => ({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height - canvas.height,
+    r: Math.random()*6+4,
+    s: Math.random()*3+2
+  }));
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle="#ff6fa5";
+      ctx.fill();
+      p.y += p.s;
+      if(p.y > canvas.height) p.y = -10;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+updateCounter();
+updateGreeting();
+setInterval(updateCounter, 1000*60*60);
 </script>
 
 </body>
